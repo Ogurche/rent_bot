@@ -83,6 +83,8 @@ async def first_step_to_change (message:types.Message, state:FSMContext):
             data['flag'] = 0 
         if message.text == 'Да':
             data['flag'] = 1
+            dot_msg = await bot.send_message (chat_id=message.chat.id , text='.',reply_markup=ReplyKeyboardRemove())
+            await bot.delete_message (chat_id= message.chat.id , message_id= dot_msg.message_id)
             await bot.send_message (chat_id=message.chat.id, text= 'Что Вы хотите изменить?',reply_markup= await confirmation_keybord(dictionary=about_house_dict['change_order'], additional_b_name = 'Назад', additional_b_data='отмена'))
             await change_order.change_second_step.set()
         elif data['flag'] == 1:
@@ -175,7 +177,7 @@ async def second_step_to_change (callback_query:types.CallbackQuery, state:FSMCo
         await bot.send_message (chat_id=callback_query.message.chat.id, text= 'Введите тип ремонта', reply_markup= await confirmation_keybord(dictionary=about_house_dict['type_repair']))
         await change_order.change_type_repair.set()
     elif callback_query.data == 'floor':
-        await bot.send_message (chat_id=callback_query.message.chat.id, text= 'Какой этаж', reply_markup= await take_floor_keybord(skip='Пропустить', skip_data='next'))
+        await bot.send_message (chat_id=callback_query.message.chat.id, text= 'Какой этаж', reply_markup= await take_floor_keybord(skip='Далее', skip_data='next'))
         await change_order.change_floor.set()
     elif callback_query.data == 'type_repair':
         await bot.send_message (chat_id=callback_query.message.chat.id, text= 'Введите тип ремонта', reply_markup=  await district_keybord(about_house_dict['type_repair'], 'Далее', 'next'))
@@ -301,7 +303,7 @@ async def change_floor (callback_query:types.CallbackQuery, state:FSMContext):
         async with state.proxy() as data_take:
             if 'floor'not in data_take:
                 data_take['floor'] = '0'
-                await update_order_bd(callback_query.message.chat.id, 'type_of_house', data_take['type_of_house'])
+                await update_order_bd(callback_query.message.chat.id, 'floor', data_take['floor'])
         await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id-1)
         await callback_query.message.edit_text (text= 'Изменения приняты')
         await first_step_to_change(callback_query.message, state=state)
@@ -321,9 +323,9 @@ async def change_type_repair (callback_query:types.CallbackQuery, state:FSMConte
         if callback_query.data.isnumeric():
             if 'type_repairs' in data_take:
                 data_take['type_repairs'] = data_take ['type_repairs']+ ', ' +str(callback_query.data)
-                data_take ['type_repair']=  data_take['type_repair'].split(', ')
-                data_take['type_repair'] = list(set(data_take['type_repair']))
-                data_take['type_repair'] = ', '.join(data_take ['type_repair'])
+                data_take ['type_repairs']=  data_take['type_repairs'].split(', ')
+                data_take['type_repairs'] = list(set(data_take['type_repairs']))
+                data_take['type_repairs'] = ', '.join(data_take ['type_repairs'])
             else:
                 data_take['type_repairs'] = str(callback_query.data)
             t_r_msg = ''
