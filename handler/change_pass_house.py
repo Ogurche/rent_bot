@@ -243,22 +243,30 @@ async def  change_photo(message:types.Message, state:FSMContext,  album: List[ty
 
 async def change_rooms (callback_query:types.CallbackQuery, state:FSMContext):
     async with state.proxy() as data:
-        await sql_update (name_of_column='rooms', value_to_change=callback_query.data, id_of_order=data['id_of_order'], id_user=callback_query.message.chat.id)
-        await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)
-        await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id-1)
-        await bot.send_message(chat_id=callback_query.message.chat.id, text = 'Количество комнат изменено')
-        await change_rents.change.set()
-        await change_rent (callback_query.message, state=state)
+        if callback_query.data == 'back':
+            await change_rents.change.set()
+            await change_rent (callback_query.message, state=state)
+        else:
+            await sql_update (name_of_column='rooms', value_to_change=callback_query.data, id_of_order=data['id_of_order'], id_user=callback_query.message.chat.id)
+            await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)
+            await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id-1)
+            await bot.send_message(chat_id=callback_query.message.chat.id, text = 'Количество комнат изменено')
+            await change_rents.change.set()
+            await change_rent (callback_query.message, state=state)
 
 
 async def change_type_of_house (callback_query:types.CallbackQuery, state:FSMContext):
     async with state.proxy() as data:
-        await sql_update (name_of_column='type_of_house', value_to_change=callback_query.data, id_of_order=data['id_of_order'], id_user=callback_query.message.chat.id)
-        await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)
-        await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id-1)
-        await bot.send_message(chat_id=callback_query.message.chat.id, text = 'Тип дома изменен')
-        await change_rents.change.set()
-        await change_rent (callback_query.message, state=state)
+        if callback_query.data == 'back':
+            await change_rents.change.set()
+            await change_rent (callback_query.message, state=state)
+        else: 
+            await sql_update (name_of_column='type_of_house', value_to_change=callback_query.data, id_of_order=data['id_of_order'], id_user=callback_query.message.chat.id)
+            await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)
+            await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id-1)
+            await bot.send_message(chat_id=callback_query.message.chat.id, text = 'Тип дома изменен')
+            await change_rents.change.set()
+            await change_rent (callback_query.message, state=state)
 
 
 async def change_type_of_repair (callback_query:types.CallbackQuery, state:FSMContext):
