@@ -163,7 +163,7 @@ async def pass_rieltor_show (callback_query:types.CallbackQuery, state: FSMConte
         data_take['rieltor_show'] = callback_query.data
         with open ('map.png', 'rb') as media:
             await bot.send_photo (chat_id=callback_query.message.chat.id , photo= media)
-        await callback_query.message.answer('Выберите район', reply_markup = await district_keybord(about_house_dict['district'], 'Далее', 'next', 'Назад', 'back'))
+        await callback_query.message.answer('Выберите район', reply_markup = await district_keybord(about_house_dict['district'],'Назад', 'back'))
         await make_order.district.set()
 
 
@@ -180,7 +180,7 @@ async def pass_district (callback_query:types.CallbackQuery, state: FSMContext):
         async with state.proxy() as data_take:
             if 'district' not in data_take:
                 data_take['district'] = '0'
-        await callback_query.message.edit_text('Выберите тип ремонта', reply_markup = await district_keybord(about_house_dict['type_repair'], 'Далее', 'next', 'Назад', 'back'))
+        await callback_query.message.edit_text('Выберите тип ремонта', reply_markup = await district_keybord(about_house_dict['type_repair'],'Назад', 'back'))
         await make_order.type_repair.set()
     else:
         async with state.proxy() as data_take:
@@ -204,7 +204,7 @@ async def pass_type_repair (callback_query:types.CallbackQuery, state: FSMContex
             if 'district' in data_take:
                 del data_take['district']
         await bot.delete_message (callback_query.message.chat.id, callback_query.message.message_id)
-        await bot.send_message (callback_query.message.chat.id, 'Выберите район', reply_markup = await district_keybord(about_house_dict['district'], 'Далее', 'next', 'Назад', 'back'))
+        await bot.send_message (callback_query.message.chat.id, 'Выберите район', reply_markup = await district_keybord(about_house_dict['district'], 'Назад', 'back'))
         await make_order.district.set()
     elif callback_query.data == 'next':
         async with state.proxy() as data_take:
@@ -212,8 +212,7 @@ async def pass_type_repair (callback_query:types.CallbackQuery, state: FSMContex
                 data_take['type_repair'] = '0'
         await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)       
         await bot.send_message (chat_id=callback_query.message.chat.id,text='Площадь квартиры: ОТ (м2)', reply_markup= await back_button_reply ())
-        # await bot.edit_message_text('Площадь квартиры: ОТ (м2)', chat_id=callback_query.message.chat.id, message_id=dot_msg.message_id)
-        # await callback_query.message.edit_text('Площадь квартиры: ОТ (м2)')
+
         await make_order.area.set()
     else:
         async with state.proxy() as data_take:
@@ -231,10 +230,14 @@ async def pass_type_repair (callback_query:types.CallbackQuery, state: FSMContex
 
 # @dp.message_handler (state=make_order.area)
 async def pass_area (message: types.Message, state: FSMContext):
+    # площадь назад поменять 
     if message.text == 'Назад':
         async with state.proxy() as data_take:
             if 'area_min' in data_take:
                 del data_take['area_min']
+                await message.answer ('Площадь квартиры: ОТ (м2)')
+                await make_order.area.set ()
+                return
             if 'type_repair' in data_take:
                 del data_take['type_repair']
         await message.answer('Выберите тип ремонта', reply_markup = await district_keybord(about_house_dict['type_repair'], 'Далее', 'next', 'Назад', 'back'))
