@@ -4,7 +4,6 @@ import logging
 from aiogram import executor
 from aiogram import types
 import asyncio
-import datetime
 import aioschedule
 
 from sys_files.bot_creation import dp
@@ -17,9 +16,11 @@ from sys_files.bot_creation import dp, bot
 
 
 async def notifi ():
+    # ПРОВЕРКА НУЖНА ЛИ РАЗДАЧА 
     data = await checker_sheduler()
     for i in data:
         houses = await search_houses (id_member=i[0])
+        # ПРОВЕРКА НАЛИЧИЯ НОВЫХ ОБЪЯВЛЕНИЙ 
         for res in houses:
             media_group = types.MediaGroup()
             if int(i[1]) < res[1]:
