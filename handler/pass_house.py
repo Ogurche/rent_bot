@@ -122,9 +122,13 @@ async def new_rent_h(message:types.Message):
     number_of_rents = (await sql_check_number_rents(id_member= message.chat.id))[0]
     its_rentie_check = (await sql_check (field="id_member", field_2= ', rieltor' ,value= message.chat.id, table= 'rentie' ))[0][1]
     if number_of_rents == 0:
+        dot_msg = await bot.send_message (chat_id=message.chat.id, text = '.', reply_markup=ReplyKeyboardRemove())
+        await bot.delete_message (chat_id=message.chat.id , message_id= dot_msg.message_id)
         await bot.send_message (chat_id=message.chat.id, text= 'Создаем новое предложение', reply_markup=types.InlineKeyboardMarkup().add(types.InlineKeyboardButton(text='Начнем', callback_data='start_new_rent')))
     elif number_of_rents >= 1:
         if its_rentie_check == True:
+            dot_msg = await bot.send_message (chat_id=message.chat.id, text = '.', reply_markup=ReplyKeyboardRemove())
+            await bot.delete_message (chat_id=message.chat.id , message_id= dot_msg.message_id)            
             await bot.send_message (chat_id=message.chat.id, text= 'Создаем новое предложение', reply_markup=types.InlineKeyboardMarkup().add(types.InlineKeyboardButton(text='Начнем', callback_data='start_new_rent')))
         else: 
             await bot.send_message (chat_id=message.chat.id, text = 'Размещать более одного объявления может только риелтор, Ваш статус Вы можете изменить нажав кнопку "Изменить профиль"')
