@@ -235,7 +235,7 @@ async def change_area (message:types.Message, state:FSMContext):
     await update_order_bd(message.chat.id, 'apartment_area_min', int(message.text))
     await bot.delete_message (chat_id=message.chat.id, message_id=message.message_id)
     await bot.delete_message (chat_id=message.chat.id, message_id=message.message_id-1)
-    await bot.send_message (chat_id=message.chat.id, text= 'Ввдеите максимальную площадь')
+    await bot.send_message (chat_id=message.chat.id, text= 'Введите максимальную площадь')
     await change_order.change_area_max.set()
 
 
@@ -270,7 +270,7 @@ async def change_district (callback_query:types.CallbackQuery, state:FSMContext)
             d_msg = ''
             for i in district_take:
                 d_msg = str(about_house_dict['district'][int(i)]) + ', ' + d_msg
-            await callback_query.message.edit_text(f'Район: {d_msg}\nВыбрать еще один вариант?', reply_markup = await district_keybord(about_house_dict['district'], 'Закончить изменения', 'next'))
+            await callback_query.message.edit_text(f'Район: {d_msg}\nВыбрать еще один вариант?', reply_markup = await district_keybord(about_house_dict['district'], 'Сохранить изменения', 'next'))
             await change_order.change_district.set()
 
 
