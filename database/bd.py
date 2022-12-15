@@ -46,9 +46,9 @@ def db_connection ():
 # Учтепинский район - 12
 # Загниатинский район - 13
 
-async def sql_check(field ='', field_2 = '', table='', value =''):
+async def sql_check(field ='', field_2 = '', table='', value ='', aditional_order = ''):
     try:
-        cursor.execute(f"SELECT {field} {field_2} FROM {table} WHERE {field} = {value}")
+        cursor.execute(f"SELECT {field} {field_2} FROM {table} WHERE {field} = {value} {aditional_order}")
         data = cursor.fetchall()
     except Exception as e:
         cursor.close()

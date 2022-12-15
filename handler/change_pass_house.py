@@ -40,7 +40,7 @@ class change_rents(StatesGroup):
 
 
 async def my_rents(message:types.Message):
-    list_of_rents = await sql_check (field_2=',*' , field= 'fk_id_member', table= 'rent' , value = message.chat.id)
+    list_of_rents = await sql_check (field_2=',*' , field= 'fk_id_member', table= 'rent' , value = message.chat.id, aditional_order='ORDER BY id '  )
     number = 1
     for rents in list_of_rents:
         media_group =  types.MediaGroup()
@@ -89,7 +89,8 @@ async def change_rent(message:types.Message, state:FSMContext):
         elif data['flag'] == 1:
             value_text = message.chat.id
 
-        list_of_rents = await sql_check (field_2=',*',field= 'fk_id_member', table= 'rent' , value = value_text)
+        list_of_rents = await sql_check (field_2=',*',field= 'fk_id_member', table= 'rent' , value = value_text, aditional_order='ORDER BY id ')
+        # for i in list_of_rents: 
         number_of_list = int(data['chs_id_of_order'])-1
         list_to_change = list_of_rents[number_of_list]
         data['type_of_house'] = list_to_change[2]
