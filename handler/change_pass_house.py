@@ -127,7 +127,7 @@ async def change_rent(message:types.Message, state:FSMContext):
     f'Этажность дома: {data ["floors_in_house"]}\n'
     f'Описание: {data ["description"]}\n'
     f'Можно с животными: {about_house_dict["true_false"][str(data ["animals"])]}\n'
-    f'Можно с детьми: {about_house_dict["true_false"][str(data ["kids"])]}\n\nЧто изменить?', reply_markup=await confirmation_keybord(dictionary=about_house_dict['change_point'], additional_b_name = 'Назад', additional_b_data='отмена',add_2='Удалить', add_2_data='delete'))
+    f'Можно с детьми: {about_house_dict["true_false"][str(data ["kids"])]}\n\nЧто изменить?', reply_markup=await confirmation_keybord(dictionary=about_house_dict['change_point'], additional_b_name = '◀️Назад', additional_b_data='отмена',add_2='Удалить', add_2_data='delete'))
     await change_rents.change_acc.set()
 
 

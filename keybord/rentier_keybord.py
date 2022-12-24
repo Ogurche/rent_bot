@@ -26,7 +26,7 @@ async def type_of_house_keybord ():
     keybord.add (InlineKeyboardButton('Квартира',callback_data='1'))
     keybord.add (InlineKeyboardButton('Комната',callback_data='2'))
     keybord.add (InlineKeyboardButton('Дом',callback_data='3'))
-    keybord.add (InlineKeyboardButton('Назад',callback_data='back'))
+    keybord.add (InlineKeyboardButton('◀️Назад',callback_data='back'))
     return keybord
 
 
@@ -38,7 +38,7 @@ async def rooms_keybord ( number , additional= None, adittional_data = None, add
         keybord.add (InlineKeyboardButton(f'{additional}',callback_data=adittional_data))
     if additional2 != None:
         keybord.add (InlineKeyboardButton(f'{additional2}',callback_data=adittional_data2))
-    keybord.add (InlineKeyboardButton('Назад',callback_data='back'))
+    keybord.add (InlineKeyboardButton('◀️Назад',callback_data='back'))
     return keybord
 
 
@@ -117,8 +117,8 @@ async def take_house_keybord_menu ():
 async def start_search_kbd():
     keybord = InlineKeyboardMarkup()
     keybord.insert (InlineKeyboardButton('Начать поиск',callback_data='start_search'))
-    keybord.insert (InlineKeyboardButton('В главное меню',callback_data='отмена'))
-    keybord.add (InlineKeyboardButton('Изменить',callback_data='change'))
+    keybord.insert (InlineKeyboardButton('Изменить',callback_data='change'))
+    keybord.add (InlineKeyboardButton('Отмена (в Главное меню)',callback_data='отмена'))
     return keybord
 
 
@@ -147,7 +147,7 @@ async def change_order_kbd ():
 
 async def back_button_inline ():
     keybord = InlineKeyboardMarkup ()
-    keybord.insert (InlineKeyboardButton('Назад',callback_data='back'))
+    keybord.insert (InlineKeyboardButton('◀️Назад',callback_data='back'))
     return keybord
 
 async def back_button_reply ():

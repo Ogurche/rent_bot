@@ -85,10 +85,10 @@ async def first_step_to_change (message:types.Message, state:FSMContext):
             data['flag'] = 1
             dot_msg = await bot.send_message (chat_id=message.chat.id , text='.',reply_markup=ReplyKeyboardRemove())
             await bot.delete_message (chat_id= message.chat.id , message_id= dot_msg.message_id)
-            await bot.send_message (chat_id=message.chat.id, text= 'Что Вы хотите изменить?',reply_markup= await confirmation_keybord(dictionary=about_house_dict['change_order'], additional_b_name = 'Назад', additional_b_data='отмена'))
+            await bot.send_message (chat_id=message.chat.id, text= 'Что Вы хотите изменить?',reply_markup= await confirmation_keybord(dictionary=about_house_dict['change_order'], additional_b_name = '◀️Назад', additional_b_data='отмена'))
             await change_order.change_second_step.set()
         elif data['flag'] == 1:
-            await bot.send_message (chat_id=message.chat.id, text= 'Что Вы хотите изменить?',reply_markup= await confirmation_keybord(dictionary=about_house_dict['change_order'], additional_b_name = 'Назад', additional_b_data='отмена'))
+            await bot.send_message (chat_id=message.chat.id, text= 'Что Вы хотите изменить?',reply_markup= await confirmation_keybord(dictionary=about_house_dict['change_order'], additional_b_name = '◀️Назад', additional_b_data='отмена'))
             await change_order.change_second_step.set()
         elif message.text == 'Нет':
             await bot.send_message (chat_id=message.chat.id, text= 'Хорошо')
@@ -315,7 +315,7 @@ async def change_floor (callback_query:types.CallbackQuery, state:FSMContext):
             data_take['floor'] = ', '.join(data_take ['floor'])            
         else:
             data_take['floor'] = str(callback_query.data)
-        await callback_query.message.edit_text('Выбрать еще один вариант?', reply_markup = await take_floor_keybord(skip='Пропустить', skip_data='next'))
+        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее?', reply_markup = await take_floor_keybord(skip='Пропустить', skip_data='next'))
 
 
 async def change_type_repair (callback_query:types.CallbackQuery, state:FSMContext):
@@ -366,7 +366,7 @@ async def change_kids_animals (callback_query:types.CallbackQuery, state:FSMCont
                 await bot.send_message(callback_query.message.chat.id, 'Уже записано')
             else:
                 data_take['animals'] = 'True'
-    await callback_query.message.edit_text('Выбрать еще один вариант?', reply_markup = await kids_animals_take_keybord(skip='Далее', skip_data='next'))
+    await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее?', reply_markup = await kids_animals_take_keybord(skip='Далее', skip_data='next'))
     await change_order.change_kids_animals.set()
 
     

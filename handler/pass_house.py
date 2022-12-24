@@ -262,7 +262,7 @@ async def komission (message:types.Message, state:FSMContext):
             await bot.delete_message (chat_id=message.chat.id, message_id=message.message_id-1)
             with open ('map.png', 'rb') as media:
                 await bot.send_photo (chat_id=message.chat.id , photo= media)
-            await bot.send_message (chat_id=message.chat.id, text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {message.text} $\n\nВведите район', reply_markup= await district_keybord(about_house_dict['district'],back_data= 'back_to_price',back='Назад'))
+            await bot.send_message (chat_id=message.chat.id, text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {message.text} $\n\nВведите район', reply_markup= await district_keybord(about_house_dict['district'],back_data= 'back_to_price',back='◀️Назад'))
             async with state.proxy() as rent_data:
                 rent_data ['komission'] = 0
             await New_rent.district.set()
@@ -278,7 +278,7 @@ async def house_district (message:types.Message, state:FSMContext, chat_id=None)
             type_house = about_house_dict['type_of_house'][rent_data['type_of_house']]
             with open ('map.png', 'rb') as media:
                 await bot.send_photo (chat_id=chat_id , photo= media)
-            await bot.send_message (chat_id=chat_id, text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\n\nВыберите район', reply_markup= await district_keybord(about_house_dict['district'],back_data= 'back_to_price',back='Назад'))
+            await bot.send_message (chat_id=chat_id, text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\n\nВыберите район', reply_markup= await district_keybord(about_house_dict['district'],back_data= 'back_to_price',back='◀️Назад'))
             await New_rent.district.set()
         elif message.text == 'Назад':
             await bot.delete_message (chat_id=message.chat.id, message_id=message.message_id-1)
@@ -289,7 +289,7 @@ async def house_district (message:types.Message, state:FSMContext, chat_id=None)
             with open ('map.png', 'rb') as media:
                 type_house = about_house_dict['type_of_house'][rent_data['type_of_house']]
                 await bot.send_photo (chat_id=chat_id , photo= media)
-            await bot.send_message (chat_id=chat_id, text = f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\n\nВыберите район', reply_markup= await district_keybord(about_house_dict['district'],back_data= 'back_to_price',back='Назад'))
+            await bot.send_message (chat_id=chat_id, text = f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\n\nВыберите район', reply_markup= await district_keybord(about_house_dict['district'],back_data= 'back_to_price',back='◀️Назад'))
             await New_rent.district.set()
         elif message.text.isnumeric():
             async with state.proxy() as rent_data:
@@ -305,7 +305,7 @@ async def house_district (message:types.Message, state:FSMContext, chat_id=None)
             await bot.delete_message (chat_id=message.chat.id, message_id=message.message_id-1)
             with open ('map.png', 'rb') as media:
                 await bot.send_photo (chat_id=chat_id , photo= media)
-            await bot.send_message (chat_id=chat_id, text = f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\n\nВыберите район', reply_markup= await district_keybord(about_house_dict['district'],back_data= 'back_to_price',back='Назад'))
+            await bot.send_message (chat_id=chat_id, text = f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\n\nВыберите район', reply_markup= await district_keybord(about_house_dict['district'],back_data= 'back_to_price',back='◀️Назад'))
             await New_rent.district.set()
         else:
             await message.reply('Напишите цифрами комиссию')
@@ -324,7 +324,7 @@ async def type_repair (callback_query:types.CallbackQuery, state:FSMContext):
             elif rent_data['changes'] == 4:
                 type_house = about_house_dict['type_of_house'][rent_data['type_of_house']]
                 district = about_house_dict['district'][rent_data['district']]  
-                await callback_query.message.edit_text (text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\nРайон: {district}\n\nВыберите тип ремонта', reply_markup= await district_keybord(about_house_dict['type_repair'],back_data= 'back_to_district',back='Назад'))
+                await callback_query.message.edit_text (text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\nРайон: {district}\n\nВыберите тип ремонта', reply_markup= await district_keybord(about_house_dict['type_repair'],back_data= 'back_to_district',back='◀️Назад'))
                 await New_rent.type_repair.set()
                 return
 
@@ -339,14 +339,14 @@ async def type_repair (callback_query:types.CallbackQuery, state:FSMContext):
             type_house = about_house_dict['type_of_house'][rent_data['type_of_house']]
             district = about_house_dict['district'][rent_data['district']]
             await callback_query.message.delete()
-            await callback_query.message.answer (text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\nРайон: {district}\n\nВыберите тип ремонта', reply_markup= await district_keybord(about_house_dict['type_repair'],back_data= 'back_to_district',back='Назад'))
+            await callback_query.message.answer (text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\nРайон: {district}\n\nВыберите тип ремонта', reply_markup= await district_keybord(about_house_dict['type_repair'],back_data= 'back_to_district',back='◀️Назад'))
             await New_rent.type_repair.set()
         except AttributeError:
             callback_query.message = callback_query
             type_house = about_house_dict['type_of_house'][rent_data['type_of_house']]
             district = about_house_dict['district'][rent_data['district']]
             await callback_query.message.delete()
-            await callback_query.message.answer (text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\nРайон: {district}\n\nВыберите тип ремонта', reply_markup= await district_keybord(about_house_dict['type_repair'],back_data= 'back_to_district',back='Назад'))
+            await callback_query.message.answer (text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\nРайон: {district}\n\nВыберите тип ремонта', reply_markup= await district_keybord(about_house_dict['type_repair'],back_data= 'back_to_district',back='◀️Назад'))
             await New_rent.type_repair.set()
 
 
@@ -599,7 +599,7 @@ async def show_rent (message:types.Message, state:FSMContext, album: List[types.
     district = about_house_dict['district'][rent_data['district']]
     type_repair = about_house_dict['type_repair'][rent_data['type_repair']]
     await message.answer_media_group(media_group)
-    await bot.send_message(chat_id=message.chat.id,text =f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\nРайон: {district}\nТип ремонта: {type_repair}\nПлощадь: {rent_data["apartment_area"]} м2\nЭтаж: {rent_data["floor"]}\nЭтажей в доме: {rent_data["floors_in_house"]}\nОписание: {rent_data["description"]}\nС животными: {animals_in_house}\nС детьми: {kids_in_house}\n\nПодтвердите публикацию объявления или измените один из параметров', reply_markup=await confirmation_keybord(about_house_dict['change_point'], additional_b_name = 'Все верно, разместить', additional_b_data='confirmed', add_2= 'Отмена', add_2_data='отмена'))
+    await bot.send_message(chat_id=message.chat.id,text =f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\nРайон: {district}\nТип ремонта: {type_repair}\nПлощадь: {rent_data["apartment_area"]} м2\nЭтаж: {rent_data["floor"]}\nЭтажей в доме: {rent_data["floors_in_house"]}\nОписание: {rent_data["description"]}\nС животными: {animals_in_house}\nС детьми: {kids_in_house}\n\nПодтвердите публикацию объявления или измените один из параметров', reply_markup=await confirmation_keybord(about_house_dict['change_point'], additional_b_name = 'Все верно, разместить', additional_b_data='confirmed', add_2= 'Отмена (в Главное меню)', add_2_data='отмена'))
 
     await New_rent.confirmation.set()
 
