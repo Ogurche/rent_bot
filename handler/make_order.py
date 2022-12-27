@@ -4,6 +4,7 @@ import asyncio
 from aiogram import types, Dispatcher 
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext, filters
+from config import ADMIN
 
 
 from database.bd import drop_row, search_houses, sql_check, sql_check_rentie_name_tn, sql_insert_take_order, sql_insert_user_take_house, sql_show_photo, update_row
@@ -411,7 +412,7 @@ async def start_search (callback_query: types.CallbackQuery, state: FSMContext):
             f'Можно с детьми: {about_house_dict["true_false"][str(message_rent ["kids"])]}\n\n'
             f'Имя арендатора: {data[0]}\n'
             f'Номер телефона: {data[1]}\n'
-            f'{data[2]}')
+            f'{data[2]}',reply_markup= await ban_button(admin_url=ADMIN))
             del media_group
             number += 1
         if len(list_of_houses) == 0:

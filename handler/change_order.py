@@ -8,10 +8,11 @@ from aiogram.types import ReplyKeyboardRemove
 
 from database.bd import search_houses, sql_check, sql_check_rentie_name_tn, sql_show_photo, sql_update, update_order_bd, update_row, update_row_nt_fls
 import handler
-from keybord.rentier_keybord import change_order_kbd, confirmation_keybord, district_keybord, kids_animals_take_keybord, notify_, order_show_change, rentier_yes_no_keybord, save_order_kbd, take_floor_keybord, take_rooms_keybord
+from keybord.rentier_keybord import ban_button, change_order_kbd, confirmation_keybord, district_keybord, kids_animals_take_keybord, notify_, order_show_change, rentier_yes_no_keybord, save_order_kbd, take_floor_keybord, take_rooms_keybord
 from sys_files.bot_creation import bot,dp
 from handler.pass_house import list_of_bd, about_house_dict
 # import scheduler_tg
+from config import ADMIN
 
 
 class change_order(StatesGroup):
@@ -135,7 +136,7 @@ async def first_step_to_change (message:types.Message, state:FSMContext):
                 f'Можно с детьми: {about_house_dict["true_false"][str(message_rent ["kids"])]}\n\n'
                 f'Имя арендатора: {data[0]}\n'
                 f'Номер телефона: {data[1]}\n'
-                f'{data[2]}')
+                f'{data[2]}', reply_markup=await ban_button(admin_url=ADMIN))
                 del media_group
                 number += 1
             await bot.send_message (message.chat.id , 'Это пока все объявления по вашему запросу', reply_markup= ReplyKeyboardRemove())  
@@ -369,7 +370,7 @@ async def change_kids_animals (callback_query:types.CallbackQuery, state:FSMCont
     await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее?', reply_markup = await kids_animals_take_keybord(skip='Далее', skip_data='next'))
     await change_order.change_kids_animals.set()
 
-    
+     
 
 #@dp.message_handler (state='*')
 async def garbage_handler (message: types.Message):

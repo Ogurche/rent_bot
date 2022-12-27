@@ -167,3 +167,10 @@ async def notify_():
     keybord = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     keybord.add ('Сохранить поиск', 'Не сохранять поиск')
     return keybord
+
+
+
+async def ban_button (admin_url):
+    keybord = InlineKeyboardMarkup()
+    keybord.add (InlineKeyboardButton('Пожаловаться', url= f'{admin_url}'))
+    return keybord

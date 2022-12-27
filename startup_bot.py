@@ -5,6 +5,7 @@ from aiogram import executor
 from aiogram import types
 import asyncio
 import aioschedule
+from keybord.rentier_keybord import ban_button
 
 from sys_files.bot_creation import dp
 from database.bd import *
@@ -52,7 +53,7 @@ async def notifi ():
                 f'Можно с детьми: {about_house_dict["true_false"][str(message_rent ["kids"])]}\n\n'
                 f'Имя арендатора: {data_names[0]}\n'
                 f'Номер телефона: {data_names[1]}\n'
-                f'{data_names[2]}')
+                f'{data_names[2]}', reply_markup=await ban_button(admin_url=ADMIN))
                 await update_lastseen(value=res[1], id_member=i[0])
                 del media_group
                 await asyncio.sleep(2)
