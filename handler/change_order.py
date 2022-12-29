@@ -73,7 +73,7 @@ async def change_order_start (message:types.Message):
         t_h_msg =str(about_house_dict['type_of_house'][int(i)]) + '. ' + t_h_msg
     
     await bot.send_message (message.chat.id, f'Ваши объявления:\n\nТип жилья: {t_h_msg}\nКоличество комнат: {rooms}\nЦена: {price} $\nРайон: {d_msg}\nТип ремонта: {t_r_msg}\nПлощадь: {area} м2\nЭтаж: {f_msg}\nМожно с животными: {animals}\nМожно с детьми: {kids}')
-    await bot.send_message (chat_id=message.chat.id, text= 'Изменить объявление?', reply_markup =await order_show_change())
+    await bot.send_message (chat_id=message.chat.id, text= 'Изменить запрос', reply_markup =await order_show_change())
     await change_order.change_first_step.set()
 
 
@@ -122,7 +122,7 @@ async def first_step_to_change (message:types.Message, state:FSMContext):
                     media_group.attach_photo (photo=photo[0])  
 
                 await bot.send_media_group (chat_id= message.chat.id ,  media=media_group)          
-                await bot.send_message (chat_id= message.chat.id , text = f'Номер объявления: {number}\n\nТип дома: {about_house_dict["type_of_house"][message_rent["type_of_house"]]}\n'
+                await bot.send_message (chat_id= message.chat.id , text = f'Номер объявления: {rents[1]}\n\nТип дома: {about_house_dict["type_of_house"][message_rent["type_of_house"]]}\n'
                 f'Количество комнат: {message_rent["rooms"]}\n'
                 f'Цена: {message_rent["price"]} $\n'
                 f'Комиссия: { message_rent["komission"]} $\n'
@@ -304,7 +304,7 @@ async def change_floor (callback_query:types.CallbackQuery, state:FSMContext):
         async with state.proxy() as data_take:
             if 'floor'not in data_take:
                 data_take['floor'] = '0'
-                await update_order_bd(callback_query.message.chat.id, 'floor', data_take['floor'])
+            await update_order_bd(callback_query.message.chat.id, 'floor', data_take['floor'])
         await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id-1)
         await callback_query.message.edit_text (text= 'Изменения приняты')
         await first_step_to_change(callback_query.message, state=state)
@@ -316,7 +316,7 @@ async def change_floor (callback_query:types.CallbackQuery, state:FSMContext):
             data_take['floor'] = ', '.join(data_take ['floor'])            
         else:
             data_take['floor'] = str(callback_query.data)
-        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее?', reply_markup = await take_floor_keybord(skip='Пропустить', skip_data='next'))
+        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее', reply_markup = await take_floor_keybord(skip='Далее', skip_data='next'))
 
 
 async def change_type_repair (callback_query:types.CallbackQuery, state:FSMContext):

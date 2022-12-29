@@ -235,7 +235,7 @@ async def price ( callback_query:types.CallbackQuery ,state:FSMContext):
 
 # @dp.message_handler(state=New_rent.price)
 async def komission (message:types.Message, state:FSMContext):
-    if message.text == 'Назад':
+    if message.text == '◀️Назад':
         await bot.delete_message (chat_id=message.chat.id, message_id=message.message_id-1)
         async with state.proxy() as rent_data:
             if rent_data['changes'] == 6:
@@ -280,7 +280,7 @@ async def house_district (message:types.Message, state:FSMContext, chat_id=None)
                 await bot.send_photo (chat_id=chat_id , photo= media)
             await bot.send_message (chat_id=chat_id, text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\n\nВыберите район', reply_markup= await district_keybord(about_house_dict['district'],back_data= 'back_to_price',back='◀️Назад'))
             await New_rent.district.set()
-        elif message.text == 'Назад':
+        elif message.text == '◀️Назад':
             await bot.delete_message (chat_id=message.chat.id, message_id=message.message_id-1)
             await price (message, state)
             del rent_data['price']
@@ -382,7 +382,7 @@ async def house_area (callback_query:types.CallbackQuery, state:FSMContext):
             district = about_house_dict['district'][rent_data['district']]
             type_repair = about_house_dict['type_repair'][rent_data['type_repair']]
             keybord = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard= True)
-            keybord.add('Пропустить', 'Назад')
+            keybord.add('Пропустить', '◀️Назад')
             await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)
             await bot.send_message (chat_id=callback_query.message.chat.id ,text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\nРайон: {district}\nТип ремонта: {type_repair}\n\nВведите площадь в м2', reply_markup= keybord)
             await New_rent.apartment_area.set()
@@ -393,7 +393,7 @@ async def house_area (callback_query:types.CallbackQuery, state:FSMContext):
             district = about_house_dict['district'][rent_data['district']]
             type_repair = about_house_dict['type_repair'][rent_data['type_repair']]
             keybord = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard= True)
-            keybord.add('Пропустить', 'Назад')
+            keybord.add('Пропустить', '◀️Назад')
             await bot.delete_message (chat_id=callback_query.message.chat.id, message_id=callback_query.message.message_id)
             await bot.send_message (chat_id=callback_query.message.chat.id ,text=f'{type_house}\nКомнат: {rent_data["rooms"]}\nЦена: {rent_data["price"]} $\nКомиссия: {rent_data["komission"]} $\nРайон: {district}\nТип ремонта: {type_repair}\n\nВведите площадь в м2', reply_markup= keybord)
             await New_rent.apartment_area.set()
@@ -402,7 +402,7 @@ async def house_area (callback_query:types.CallbackQuery, state:FSMContext):
 
 # @dp.message_handler(state=New_rent.apartment_area)
 async def floor (message:types.Message, state:FSMContext, callback_query:types.CallbackQuery = None, arg=None):
-    if message.text == 'Назад':
+    if message.text == '◀️Назад':
         if arg != None:
             async with state.proxy() as rent_data:
                 type_house = about_house_dict['type_of_house'][rent_data['type_of_house']]
@@ -450,7 +450,7 @@ async def floor (message:types.Message, state:FSMContext, callback_query:types.C
 
 # @dp.message_handler(state=New_rent.floor)
 async def floor_all (message:types.Message, state:FSMContext, args=None ):
-    if message.text == 'Назад':
+    if message.text == '◀️Назад':
         if args != None:
             async with state.proxy() as rent_data:
                 type_house = about_house_dict['type_of_house'][rent_data['type_of_house']]
@@ -478,7 +478,7 @@ async def floor_all (message:types.Message, state:FSMContext, args=None ):
 
 # @dp.message_handler(state=New_rent.floors_in_house)
 async def description (message:types.Message, state:FSMContext, chat_id = None):
-    if message.text == 'Назад':
+    if message.text == '◀️Назад':
         await bot.delete_message (chat_id=message.chat.id, message_id=message.message_id-1)
         async with state.proxy() as rent_data:
             del rent_data['floor']
@@ -509,7 +509,7 @@ async def description (message:types.Message, state:FSMContext, chat_id = None):
 
 # @dp.message_handler(state=New_rent.description)
 async def animals (message:types.Message, state:FSMContext):
-    if message.text == 'Назад':
+    if message.text == '◀️Назад':
         await bot.delete_message (chat_id=message.chat.id, message_id=message.message_id-1)
         async with state.proxy() as rent_data:
             del rent_data['floor']

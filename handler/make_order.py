@@ -99,7 +99,7 @@ async def pass_type_house (callback_query:types.CallbackQuery, state: FSMContext
                 else:
                     data_take['type_of_house'] = str(callback_query.data)
             
-        await callback_query.message.edit_text(f'Ваш вариант выбран. Выберите еще один или нажмите кнопку далее?', reply_markup = await confirmation_keybord(dictionary=about_house_dict['type_of_house'], additional_b_data='next', additional_b_name='Далее'))
+        await callback_query.message.edit_text(f'Ваш вариант выбран. Выберите еще один или нажмите кнопку далее', reply_markup = await confirmation_keybord(dictionary=about_house_dict['type_of_house'], additional_b_data='next', additional_b_name='Далее'))
         await make_order.type_of_house.set()
 
 
@@ -124,13 +124,13 @@ async def pass_rooms (callback_query:types.CallbackQuery, state: FSMContext):
             else:
                 data_take['rooms'] = str(callback_query.data)
             
-        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее?', reply_markup = await take_rooms_keybord(4, '4+', '4+', "Дальше",'next'))
+        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее', reply_markup = await take_rooms_keybord(4, '4+', '4+', "Дальше",'next'))
         await make_order.rooms.set()
 
 
 # @dp.message_handler (state=make_order.price)
 async def pass_price (message: types.Message, state: FSMContext):
-    if message.text == 'Назад':
+    if message.text == '◀️Назад':
         await bot.delete_message (message.chat.id, message.message_id)
         async with state.proxy() as data_take:
             if 'price_min' in data_take:
@@ -192,7 +192,7 @@ async def pass_district (callback_query:types.CallbackQuery, state: FSMContext):
                 data_take['district'] = ', '.join(data_take ['district'])
             else:
                 data_take['district'] = str(callback_query.data)
-        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее?', reply_markup = await district_keybord(about_house_dict['district'], 'Далее', 'next'))
+        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее', reply_markup = await district_keybord(about_house_dict['district'], 'Далее', 'next'))
         await make_order.district.set()
 
 
@@ -225,14 +225,14 @@ async def pass_type_repair (callback_query:types.CallbackQuery, state: FSMContex
             else:
                 data_take['type_repair'] = str(callback_query.data)
             
-        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее?', reply_markup = await district_keybord(about_house_dict['type_repair'], 'Далее', 'next'))
+        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее', reply_markup = await district_keybord(about_house_dict['type_repair'], 'Далее', 'next'))
         await make_order.type_repair.set()
 
 
 # @dp.message_handler (state=make_order.area)
 async def pass_area (message: types.Message, state: FSMContext):
     # площадь назад поменять 
-    if message.text == 'Назад':
+    if message.text == '◀️Назад':
         async with state.proxy() as data_take:
             if 'area_min' in data_take:
                 del data_take['area_min']
@@ -287,7 +287,7 @@ async def pass_floor (callback_query:types.CallbackQuery, state: FSMContext):
             else:
                 data_take['floor'] = str(callback_query.data)
             
-        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее?', reply_markup = await take_floor_keybord(skip='Далее', skip_data='next'))
+        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее', reply_markup = await take_floor_keybord(skip='Далее', skip_data='next'))
         await make_order.floors.set()
 
 
@@ -374,7 +374,7 @@ async def pass_animals_kids (callback_query:types.CallbackQuery, state: FSMConte
                     await bot.send_message(callback_query.message.chat.id, 'Уже записано')
                 else:
                     data_take['animals'] = 'True'
-        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее?', reply_markup = await kids_animals_take_keybord(skip='Далее', skip_data= 'next'))
+        await callback_query.message.edit_text('Ваш вариант выбран. Выберите еще один или нажмите кнопку далее', reply_markup = await kids_animals_take_keybord(skip='Далее', skip_data= 'next'))
         await make_order.animals_kids.set()
 
 # TODO
@@ -398,7 +398,7 @@ async def start_search (callback_query: types.CallbackQuery, state: FSMContext):
                 media_group.attach_photo (photo=photo[0])  
 
             await bot.send_media_group (chat_id= callback_query.message.chat.id ,  media=media_group)          
-            await bot.send_message (chat_id= callback_query.message.chat.id , text = f'Номер объявления: {number}\n\nТип дома: {about_house_dict["type_of_house"][message_rent["type_of_house"]]}\n'
+            await bot.send_message (chat_id= callback_query.message.chat.id , text = f'Номер объявления: {rents[1]}\n\nТип дома: {about_house_dict["type_of_house"][message_rent["type_of_house"]]}\n'
             f'Количество комнат: {message_rent["rooms"]}\n'
             f'Цена: {message_rent["price"]} $\n'
             f'Комиссия: { message_rent["komission"]} $\n'

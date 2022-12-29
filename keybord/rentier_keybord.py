@@ -152,7 +152,7 @@ async def back_button_inline ():
 
 async def back_button_reply ():
     keybord = ReplyKeyboardMarkup (resize_keyboard=True, one_time_keyboard=True)
-    keybord.insert ('Назад')
+    keybord.insert ('◀️Назад')
     return keybord
 
 

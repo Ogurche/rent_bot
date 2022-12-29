@@ -39,7 +39,7 @@ async def notifi ():
                 
                 await bot.send_message ( chat_id= i[0], text='Новое предложение для вас')
                 await bot.send_media_group (chat_id=i[0], media=media_group )
-                await bot.send_message (chat_id= i[0] ,text= f'Тип дома: {about_house_dict["type_of_house"][message_rent["type_of_house"]]}\n'
+                await bot.send_message (chat_id= i[0] ,text= f'Номер объявления {res[1]}\n\nТип дома: {about_house_dict["type_of_house"][message_rent["type_of_house"]]}\n'
                 f'Количество комнат: {message_rent["rooms"]}\n'
                 f'Цена: {message_rent["price"]} $\n'
                 f'Комиссия: { message_rent["komission"]} $\n'

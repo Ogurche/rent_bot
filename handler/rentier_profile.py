@@ -26,7 +26,7 @@ class Rentier (StatesGroup):
 #@dp.message_handler (commands=['start'])
 async def start_cmd (message: types.Message):
     keybord = await menu_keybord()
-    await message.answer('Добро пожаловать в бот поиску квартир в Узбекистане🤖🇺🇿. По всем вопросам и пожеланиям пишите @flat_rent_admin?', reply_markup= keybord)
+    await message.answer('Добро пожаловать в бот поиску квартир в Узбекистане🤖🇺🇿. По всем вопросам и пожеланиям пишите @flat_rent_admin', reply_markup= keybord)
 
 
 #@dp.message_handler(filters.Text (equals='Сдать'))
